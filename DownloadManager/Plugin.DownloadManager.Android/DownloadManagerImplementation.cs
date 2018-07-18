@@ -67,6 +67,7 @@ namespace Plugin.DownloadManager
             string destinationPathName = null;
             if (PathNameForDownloadedFile != null) {
                 destinationPathName = PathNameForDownloadedFile (file);
+                file.DestinationPathName = destinationPathName;
             }
 
             file.StartDownload (_downloadManager, destinationPathName, mobileNetworkAllowed, NotificationVisibility, IsVisibleInDownloadsUi);

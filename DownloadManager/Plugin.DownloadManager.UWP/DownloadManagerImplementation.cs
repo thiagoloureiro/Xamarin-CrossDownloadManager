@@ -65,8 +65,9 @@ namespace Plugin.DownloadManager
             if (PathNameForDownloadedFile != null)
             {
                 destinationPathName = PathNameForDownloadedFile(file);
+                file.DestinationPathName = destinationPathName;
             }
-            
+
             //Do not await here otherwise it will never return
             file.StartDownloadAsync(destinationPathName, mobileNetworkAllowed);
         }
