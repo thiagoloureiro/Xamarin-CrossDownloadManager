@@ -67,6 +67,7 @@ namespace Plugin.DownloadManager
             string destinationPathName = null;
             if (PathNameForDownloadedFile != null) {
                 destinationPathName = PathNameForDownloadedFile (file);
+                file.DestinationPathName = destinationPathName;
             }
 
             file.StartDownload (_downloadManager, destinationPathName, mobileNetworkAllowed, NotificationVisibility, IsVisibleInDownloadsUi);
@@ -165,8 +166,11 @@ namespace Plugin.DownloadManager
 
             switch ((DownloadStatus)cursor.GetInt (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnStatus))) {
             case DownloadStatus.Successful:
-                downloadFile.DestinationPathName = _downloadManager.GetUriForDownloadedFile(downloadFile.Id).ToString();
-                downloadFile.StatusDetails = default(string);
+                if (string.IsNullOrEmpty(downloadFile.DestinationPathName))
+                {
+                    downloadFile.DestinationPathName = _downloadManager.GetUriForDownloadedFile(downloadFile.Id).ToString();
+                }
+                    downloadFile.StatusDetails = default(string);
                 downloadFile.Status = DownloadFileStatus.COMPLETED;
                 RemoveFile (downloadFile);
                 break;
