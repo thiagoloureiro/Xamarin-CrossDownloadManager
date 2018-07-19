@@ -1,6 +1,6 @@
 ## Changes
 
-### 1.3.7
+### 1.4.0 (Unreleased)
 
   * Added DestinationPathName to DownloadFile which returns the path of the local file
 

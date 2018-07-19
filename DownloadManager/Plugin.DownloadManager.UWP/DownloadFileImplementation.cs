@@ -144,7 +144,6 @@ namespace Plugin.DownloadManager
                 file = await folder.CreateFileAsync(downloadUrl.Segments.Last(), CreationCollisionOption.GenerateUniqueName);
             }
 
-            DestinationPathName = file.Path;
             DownloadOperation = downloader.CreateDownload(downloadUrl, file);
 
             var progress = new Progress<DownloadOperation>(ProgressChanged);
@@ -167,6 +166,11 @@ namespace Plugin.DownloadManager
         {
             TotalBytesExpected = downloadOperation.Progress.TotalBytesToReceive;
             TotalBytesWritten = downloadOperation.Progress.BytesReceived;
+
+            if (downloadOperation.Progress.Status == BackgroundTransferStatus.Completed)
+            {
+                DestinationPathName = downloadOperation.ResultFile.Path;
+            }
 
             Status = downloadOperation.Progress.Status.ToDownloadFileStatus();
         }
