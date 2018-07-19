@@ -85,6 +85,10 @@ namespace Plugin.DownloadManager
                 file.DestinationPathName = destinationPathName;
                 success = MoveDownloadedFile (file, location, destinationPathName);
             }
+            else
+            {
+                file.DestinationPathName = location.ToString();
+            }
 
             // If the file destination is unknown or was moved successfully ...
             if (success) {

@@ -144,6 +144,7 @@ namespace Plugin.DownloadManager
                 file = await folder.CreateFileAsync(downloadUrl.Segments.Last(), CreationCollisionOption.GenerateUniqueName);
             }
 
+            DestinationPathName = file.Path;
             DownloadOperation = downloader.CreateDownload(downloadUrl, file);
 
             var progress = new Progress<DownloadOperation>(ProgressChanged);
