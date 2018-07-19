@@ -1,5 +1,9 @@
 ## Changes
 
+### 1.4.0 (Unreleased)
+
+  * Added DestinationPathName to DownloadFile which returns the path of the local file
+
 ### 1.3.6
 
   * Fixed bug [#77](https://github.com/SimonSimCity/Xamarin-CrossDownloadManager/issues/77): [Android] Download are cancelled with no reason
