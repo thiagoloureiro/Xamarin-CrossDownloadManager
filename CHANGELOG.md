@@ -1,8 +1,9 @@
 ## Changes
 
-### 1.4.0 (Unreleased)
+### 1.4.0
 
-  * Added DestinationPathName to DownloadFile which returns the path of the local file
+  * Feature [#94](https://github.com/SimonSimCity/Xamarin-CrossDownloadManager/issues/94): Added DestinationPathName to IDownloadFile which returns the path of the local file
+  * Bug [#88](https://github.com/SimonSimCity/Xamarin-CrossDownloadManager/issues/88): [Android] TotalBytesExpected and TotalBytesWritten is converted as integers but should be float
 
 ### 1.3.6
 
