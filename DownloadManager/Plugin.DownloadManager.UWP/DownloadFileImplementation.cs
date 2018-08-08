@@ -21,6 +21,19 @@ namespace Plugin.DownloadManager
 
         public string Url { get; }
 
+        private string _destinationPathName;
+
+        public string DestinationPathName
+        {
+            get { return _destinationPathName; }
+            set
+            {
+                if (Equals(_destinationPathName, value)) return;
+                _destinationPathName = value;
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(DestinationPathName)));
+            }
+        }
+
         public IDictionary<string, string> Headers { get; }
 
         DownloadFileStatus _status;
@@ -153,6 +166,11 @@ namespace Plugin.DownloadManager
         {
             TotalBytesExpected = downloadOperation.Progress.TotalBytesToReceive;
             TotalBytesWritten = downloadOperation.Progress.BytesReceived;
+
+            if (downloadOperation.Progress.Status == BackgroundTransferStatus.Completed)
+            {
+                DestinationPathName = downloadOperation.ResultFile.Path;
+            }
 
             Status = downloadOperation.Progress.Status.ToDownloadFileStatus();
         }

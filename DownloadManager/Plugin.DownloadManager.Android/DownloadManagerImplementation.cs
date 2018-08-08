@@ -160,11 +160,12 @@ namespace Plugin.DownloadManager
          */
         public void UpdateFileProperties (ICursor cursor, DownloadFileImplementation downloadFile)
         {
-            downloadFile.TotalBytesWritten = cursor.GetInt (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnBytesDownloadedSoFar));
-            downloadFile.TotalBytesExpected = cursor.GetInt (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnTotalSizeBytes));
+            downloadFile.TotalBytesWritten = cursor.GetFloat (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnBytesDownloadedSoFar));
+            downloadFile.TotalBytesExpected = cursor.GetFloat (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnTotalSizeBytes));
 
             switch ((DownloadStatus)cursor.GetInt (cursor.GetColumnIndex (Android.App.DownloadManager.ColumnStatus))) {
             case DownloadStatus.Successful:
+                downloadFile.DestinationPathName = cursor.GetString(cursor.GetColumnIndex("local_uri"));
                 downloadFile.StatusDetails = default(string);
                 downloadFile.Status = DownloadFileStatus.COMPLETED;
                 RemoveFile (downloadFile);
