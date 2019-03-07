@@ -105,6 +105,14 @@ namespace Plugin.DownloadManager
 
         public DownloadFileImplementation(DownloadOperation downloadOperation)
         {
+            try
+            {
+                Url = downloadOperation?.RequestedUri?.AbsoluteUri;
+            }
+            catch(InvalidOperationException e)
+            {
+                // Ignore it, this property is not necessary for the downloader itself.
+            }
             DownloadOperation = downloadOperation;
 
             var progress = new Progress<DownloadOperation>(ProgressChanged);
