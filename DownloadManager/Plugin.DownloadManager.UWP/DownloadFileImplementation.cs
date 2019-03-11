@@ -157,8 +157,8 @@ namespace Plugin.DownloadManager
             {
             } catch (Exception e)
             {
-                Status = DownloadFileStatus.FAILED;
                 StatusDetails = e.Message;
+                Status = DownloadFileStatus.FAILED;
             }
         }
 
