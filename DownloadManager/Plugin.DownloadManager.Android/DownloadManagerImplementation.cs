@@ -172,9 +172,6 @@ namespace Plugin.DownloadManager
                 break;
                     
             case DownloadStatus.Failed:
-                downloadFile.Status = DownloadFileStatus.FAILED;
-                RemoveFile (downloadFile);
-
                 var reasonFailed = cursor.GetInt(cursor.GetColumnIndex(Android.App.DownloadManager.ColumnReason));
                 if (reasonFailed < 600) {
                     downloadFile.StatusDetails = "Error.HttpCode: " + reasonFailed;
@@ -212,11 +209,11 @@ namespace Plugin.DownloadManager
                         break;
                     }
                 }
+                downloadFile.Status = DownloadFileStatus.FAILED;
+                RemoveFile(downloadFile);
                 break;
                     
             case DownloadStatus.Paused:
-                downloadFile.Status = DownloadFileStatus.PAUSED;
-                
                 var reasonPaused = cursor.GetInt(cursor.GetColumnIndex(Android.App.DownloadManager.ColumnReason));
                 switch ((DownloadPausedReason)reasonPaused) {
                 case DownloadPausedReason.QueuedForWifi:
@@ -235,6 +232,7 @@ namespace Plugin.DownloadManager
                     downloadFile.StatusDetails = "Paused.Unregistered: " + reasonPaused;
                     break;
                 }
+                downloadFile.Status = DownloadFileStatus.PAUSED;
                 break;
                     
             case DownloadStatus.Pending:
