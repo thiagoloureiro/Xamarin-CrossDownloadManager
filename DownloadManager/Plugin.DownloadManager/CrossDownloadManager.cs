@@ -30,6 +30,13 @@ namespace Plugin.DownloadManager
         /// @see https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1411552-discretionary?language=objc
         /// </summary>
         public static bool AvoidDiscretionaryDownloadInBackground;
+        
+        /// <summary>
+        /// Set the HttpMaximumConnectionsPerHost for the NSUrlSessionConfiguration
+        /// It is recommended to leave this setting on it's default 1, as higher values might cause higher memory usage. However there are situations
+        /// where a higher value could make sense.
+        /// </summary>
+        public static int HttpMaximumConnectionsPerHost = 1;
 #endif
 
         /// <summary>
@@ -48,7 +55,7 @@ namespace Plugin.DownloadManager
         private static IDownloadManager CreateDownloadManager ()
         {
 #if __IOS__
-            return new DownloadManagerImplementation (UrlSessionDownloadDelegate ?? new UrlSessionDownloadDelegate(), AvoidDiscretionaryDownloadInBackground);
+            return new DownloadManagerImplementation (UrlSessionDownloadDelegate ?? new UrlSessionDownloadDelegate(), AvoidDiscretionaryDownloadInBackground, HttpMaximumConnectionsPerHost);
 #elif __ANDROID__ || __UNIFIED__ || WINDOWS_UWP
             return new DownloadManagerImplementation();
 #else
