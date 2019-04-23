@@ -55,7 +55,6 @@ namespace Plugin.DownloadManager
             _backgroundSession.GetTasks2((dataTasks, uploadTasks, downloadTasks) => {
                 foreach (var task in downloadTasks) {
                     AddFile(new DownloadFileImplementation(task));
-                    task.Resume();
                 }
             });
         }
