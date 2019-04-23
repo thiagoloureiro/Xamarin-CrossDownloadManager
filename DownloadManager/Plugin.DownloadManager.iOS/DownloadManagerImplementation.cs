@@ -16,6 +16,8 @@ namespace Plugin.DownloadManager
         private string _identifier => NSBundle.MainBundle.BundleIdentifier + ".BackgroundTransferSession";
 
         private readonly bool _avoidDiscretionaryDownloadInBackground;
+        
+        private readonly int _httpMaximumConnectionsPerHost;
 
         private readonly NSUrlSession _backgroundSession;
         
@@ -36,9 +38,10 @@ namespace Plugin.DownloadManager
         public Func<IDownloadFile, string> PathNameForDownloadedFile { get; set; }
 
         public DownloadManagerImplementation (UrlSessionDownloadDelegate sessionDownloadDelegate,
-            bool avoidDiscretionaryDownloadInBackground)
+            bool avoidDiscretionaryDownloadInBackground, int httpMaximumConnectionsPerHost)
         {
             _avoidDiscretionaryDownloadInBackground = avoidDiscretionaryDownloadInBackground;
+            _httpMaximumConnectionsPerHost = httpMaximumConnectionsPerHost;
             _queue = new List<IDownloadFile> ();
 
             if (avoidDiscretionaryDownloadInBackground)
@@ -149,7 +152,7 @@ namespace Plugin.DownloadManager
         }
 
         private NSUrlSession createSession(NSUrlSessionConfiguration configuration, UrlSessionDownloadDelegate sessionDownloadDelegate) {
-            configuration.HttpMaximumConnectionsPerHost = 1;
+            configuration.HttpMaximumConnectionsPerHost = _httpMaximumConnectionsPerHost;
 
             return NSUrlSession.FromConfiguration(configuration, sessionDownloadDelegate, null);
         }
