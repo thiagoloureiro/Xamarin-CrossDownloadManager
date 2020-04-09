@@ -3,7 +3,6 @@ using Plugin.DownloadManager;
 using Plugin.DownloadManager.Abstractions;
 using System;
 using System.IO;
-using System.Reflection;
 using Windows.Networking.BackgroundTransfer;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -15,10 +14,10 @@ namespace UWP
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
+        private BackgroundDownloader backgroundDownloader = new BackgroundDownloader();
 
-        string path;
-        Downloader foo;
+        private string path;
+        private Downloader foo;
 
         public MainPage()
         {
@@ -55,8 +54,9 @@ namespace UWP
 
             foo.InitializeDownload();
 
-            foo.File.PropertyChanged += (sender, e) => {
-               // System.Diagnostics.Debug.WriteLine("[Property changed] " + e.PropertyName + " -> " + sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null).ToString());
+            foo.File.PropertyChanged += (sender, e) =>
+            {
+                // System.Diagnostics.Debug.WriteLine("[Property changed] " + e.PropertyName + " -> " + sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null).ToString());
 
                 // Update UI text-fields
                 var downloadFile = ((IDownloadFile)sender);
@@ -65,11 +65,13 @@ namespace UWP
                     case nameof(IDownloadFile.Status):
                         Statustext.Text = downloadFile.Status.ToString();
                         break;
+
                     case nameof(IDownloadFile.TotalBytesExpected):
-                        BytesExpected.Text = (downloadFile.TotalBytesExpected/1000).ToString();
+                        BytesExpected.Text = (downloadFile.TotalBytesExpected / 1000).ToString();
                         break;
+
                     case nameof(IDownloadFile.TotalBytesWritten):
-                        BytesReceived.Text = (downloadFile.TotalBytesWritten/1000).ToString();
+                        BytesReceived.Text = (downloadFile.TotalBytesWritten / 1000).ToString();
                         break;
                 }
 
@@ -111,7 +113,6 @@ namespace UWP
 
         private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
         {
-
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using Plugin.DownloadManager.Abstractions;
+﻿using Plugin.DownloadManager.Abstractions;
+using System;
 
 namespace Plugin.DownloadManager
 {
@@ -8,9 +8,10 @@ namespace Plugin.DownloadManager
     /// </summary>
     public class CrossDownloadManager
     {
-        private static Lazy<IDownloadManager> Implementation = new Lazy<IDownloadManager> (() => CreateDownloadManager (), System.Threading.LazyThreadSafetyMode.PublicationOnly);
+        private static Lazy<IDownloadManager> Implementation = new Lazy<IDownloadManager>(() => CreateDownloadManager(), System.Threading.LazyThreadSafetyMode.PublicationOnly);
 
 #if __IOS__
+
         /// <summary>
         /// Set the background session completion handler.
         /// @see: https://developer.xamarin.com/guides/ios/application_fundamentals/backgrounding/part_4_ios_backgrounding_walkthroughs/background_transfer_walkthrough/#Handling_Transfer_Completion
@@ -30,32 +31,36 @@ namespace Plugin.DownloadManager
         /// @see https://developer.apple.com/documentation/foundation/nsurlsessionconfiguration/1411552-discretionary?language=objc
         /// </summary>
         public static bool AvoidDiscretionaryDownloadInBackground;
-        
+
         /// <summary>
         /// Set the HttpMaximumConnectionsPerHost for the NSUrlSessionConfiguration
         /// It is recommended to leave this setting on it's default 1, as higher values might cause higher memory usage. However there are situations
         /// where a higher value could make sense.
         /// </summary>
         public static int HttpMaximumConnectionsPerHost = 1;
+
 #endif
 
         /// <summary>
         /// The platform-implementation
         /// </summary>
-        public static IDownloadManager Current {
-            get {
+        public static IDownloadManager Current
+        {
+            get
+            {
                 var ret = Implementation.Value;
-                if (ret == null) {
-                    throw NotImplementedInReferenceAssembly ();
+                if (ret == null)
+                {
+                    throw NotImplementedInReferenceAssembly();
                 }
                 return ret;
             }
         }
 
-        private static IDownloadManager CreateDownloadManager ()
+        private static IDownloadManager CreateDownloadManager()
         {
 #if __IOS__
-            return new DownloadManagerImplementation (UrlSessionDownloadDelegate ?? new UrlSessionDownloadDelegate(), AvoidDiscretionaryDownloadInBackground, HttpMaximumConnectionsPerHost);
+            return new DownloadManagerImplementation(UrlSessionDownloadDelegate ?? new UrlSessionDownloadDelegate(), AvoidDiscretionaryDownloadInBackground, HttpMaximumConnectionsPerHost);
 #elif __ANDROID__ || __UNIFIED__ || WINDOWS_UWP
             return new DownloadManagerImplementation();
 #else
@@ -63,9 +68,9 @@ namespace Plugin.DownloadManager
 #endif
         }
 
-        internal static Exception NotImplementedInReferenceAssembly ()
+        internal static Exception NotImplementedInReferenceAssembly()
         {
-            return new NotImplementedException ("This functionality is not implemented in the portable version of this assembly.  You should reference the NuGet package from your main application project in order to reference the platform-specific implementation.");
+            return new NotImplementedException("This functionality is not implemented in the portable version of this assembly.  You should reference the NuGet package from your main application project in order to reference the platform-specific implementation.");
         }
     }
 }

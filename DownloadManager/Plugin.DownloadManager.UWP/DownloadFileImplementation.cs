@@ -36,10 +36,12 @@ namespace Plugin.DownloadManager
 
         public IDictionary<string, string> Headers { get; }
 
-        DownloadFileStatus _status;
+        private DownloadFileStatus _status;
 
-        public DownloadFileStatus Status {
-            get {
+        public DownloadFileStatus Status
+        {
+            get
+            {
                 return _status;
             }
             set
@@ -50,11 +52,12 @@ namespace Plugin.DownloadManager
             }
         }
 
-        string _statusDetails;
+        private string _statusDetails;
 
         public string StatusDetails
         {
-            get {
+            get
+            {
                 return _statusDetails;
             }
             set
@@ -69,7 +72,8 @@ namespace Plugin.DownloadManager
 
         public float TotalBytesExpected
         {
-            get {
+            get
+            {
                 return _totalBytesExpected;
             }
             set
@@ -84,7 +88,8 @@ namespace Plugin.DownloadManager
 
         public float TotalBytesWritten
         {
-            get {
+            get
+            {
                 return _totalBytesWritten;
             }
             set
@@ -109,7 +114,7 @@ namespace Plugin.DownloadManager
             {
                 Url = downloadOperation?.RequestedUri?.AbsoluteUri;
             }
-            catch(InvalidOperationException e)
+            catch (InvalidOperationException e)
             {
                 // Ignore it, this property is not necessary for the downloader itself.
             }
@@ -161,9 +166,11 @@ namespace Plugin.DownloadManager
             {
                 var downloadOperation = await DownloadOperation.StartAsync().AsTask(_cancellationToken.Token, progress);
                 ProgressChanged(downloadOperation);
-            } catch (TaskCanceledException)
+            }
+            catch (TaskCanceledException)
             {
-            } catch (Exception e)
+            }
+            catch (Exception e)
             {
                 StatusDetails = e.Message;
                 Status = DownloadFileStatus.FAILED;

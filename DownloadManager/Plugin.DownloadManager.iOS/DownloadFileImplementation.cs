@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Foundation;
+using Plugin.DownloadManager.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using Foundation;
-using Plugin.DownloadManager.Abstractions;
 
 namespace Plugin.DownloadManager
 {
@@ -32,26 +32,32 @@ namespace Plugin.DownloadManager
 
         public IDictionary<string, string> Headers { get; }
 
-        DownloadFileStatus _status;
+        private DownloadFileStatus _status;
 
-        public DownloadFileStatus Status {
-            get {
+        public DownloadFileStatus Status
+        {
+            get
+            {
                 return _status;
             }
-            set {
+            set
+            {
                 if (Equals(_status, value)) return;
                 _status = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(Status)));
             }
         }
 
-        string _statusDetails;
+        private string _statusDetails;
 
-        public string StatusDetails {
-            get {
+        public string StatusDetails
+        {
+            get
+            {
                 return _statusDetails;
             }
-            set {
+            set
+            {
                 if (Equals(_statusDetails, value)) return;
                 _statusDetails = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(StatusDetails)));
@@ -60,11 +66,14 @@ namespace Plugin.DownloadManager
 
         private float _totalBytesExpected;
 
-        public float TotalBytesExpected {
-            get {
+        public float TotalBytesExpected
+        {
+            get
+            {
                 return _totalBytesExpected;
             }
-            set {
+            set
+            {
                 if (Equals(_totalBytesExpected, value)) return;
                 _totalBytesExpected = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalBytesExpected)));
@@ -73,11 +82,14 @@ namespace Plugin.DownloadManager
 
         private float _totalBytesWritten;
 
-        public float TotalBytesWritten {
-            get {
+        public float TotalBytesWritten
+        {
+            get
+            {
                 return _totalBytesWritten;
             }
-            set {
+            set
+            {
                 if (Equals(_totalBytesWritten, value)) return;
                 _totalBytesWritten = value;
                 PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(TotalBytesWritten)));
@@ -87,6 +99,7 @@ namespace Plugin.DownloadManager
         /**
          * Initializing a new object to add it to the download-queue
          */
+
         public DownloadFileImplementation(string url, IDictionary<string, string> headers)
         {
             Url = url;
@@ -98,16 +111,19 @@ namespace Plugin.DownloadManager
         /**
          * Called when re-initializing the app after the app shut down to be able to still handle on-success calls.
          */
+
         public DownloadFileImplementation(NSUrlSessionTask task)
         {
             Url = task.OriginalRequest.Url.AbsoluteString;
             Headers = new Dictionary<string, string>();
 
-            foreach (var header in task.OriginalRequest.Headers) {
+            foreach (var header in task.OriginalRequest.Headers)
+            {
                 Headers.Add(new KeyValuePair<string, string>(header.Key.ToString(), header.Value.ToString()));
             }
 
-            switch (task.State) {
+            switch (task.State)
+            {
                 case NSUrlSessionTaskState.Running:
                     Status = DownloadFileStatus.RUNNING;
                     break;
@@ -134,10 +150,13 @@ namespace Plugin.DownloadManager
         public void StartDownload(NSUrlSession session, bool allowsCellularAccess)
         {
             using (var downloadUrl = NSUrl.FromString(Url))
-            using (var request = new NSMutableUrlRequest(downloadUrl)) {
-                if (Headers != null) {
+            using (var request = new NSMutableUrlRequest(downloadUrl))
+            {
+                if (Headers != null)
+                {
                     var headers = new NSMutableDictionary();
-                    foreach (var header in Headers) {
+                    foreach (var header in Headers)
+                    {
                         headers.SetValueForKey(
                             new NSString(header.Value),
                             new NSString(header.Key)

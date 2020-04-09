@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Plugin.DownloadManager.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Plugin.DownloadManager.Abstractions;
-using Windows.Networking.BackgroundTransfer;
 using System.Linq;
+using Windows.Networking.BackgroundTransfer;
 
 namespace Plugin.DownloadManager
 {
@@ -34,7 +34,8 @@ namespace Plugin.DownloadManager
             _queue = new List<IDownloadFile>();
 
             // Enumerate outstanding downloads.
-            BackgroundDownloader.GetCurrentDownloadsAsync().AsTask().ContinueWith((downloadOperationsTask) => {
+            BackgroundDownloader.GetCurrentDownloadsAsync().AsTask().ContinueWith((downloadOperationsTask) =>
+            {
                 foreach (var downloadOperation in downloadOperationsTask.Result)
                 {
                     var downloadFile = new DownloadFileImplementation(downloadOperation);

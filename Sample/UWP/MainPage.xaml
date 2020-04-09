@@ -41,6 +41,6 @@
             <AppBarToggleButton x:Name="CellularNetworkAllowed" Icon="Accept" Margin="10" />
             <TextBlock Text="Allow download over cellular network" Height="30" Grid.Column="1" HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" Margin="10" />
         </Grid>
-        <Button x:Name="downloadBtn" Height="30" Grid.Row="4" Content="Download" Click="downloadBtn_Click" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,10"/>
+        <Button x:Name="downloadBtn" Height="30" Grid.Row="4" Content="Download" Click="downloadBtn_Click" HorizontalAlignment="Stretch" VerticalAlignment="Top" Margin="0,10" />
     </Grid>
 </Page>

@@ -1,7 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using Plugin.DownloadManager;
+﻿using Plugin.DownloadManager;
 using Plugin.DownloadManager.Abstractions;
+using System;
 
 namespace DownloadExample
 {
@@ -11,7 +10,7 @@ namespace DownloadExample
 
         public Downloader()
         {
-            CrossDownloadManager.Current.CollectionChanged += (sender, e) => 
+            CrossDownloadManager.Current.CollectionChanged += (sender, e) =>
                 System.Diagnostics.Debug.WriteLine(
                     "[DownloadManager] " + e.Action +
                     " -> New items: " + (e.NewItems?.Count ?? 0) +
@@ -23,7 +22,7 @@ namespace DownloadExample
 
         public void InitializeDownload()
         {
-            File = CrossDownloadManager.Current.CreateDownloadFile (
+            File = CrossDownloadManager.Current.CreateDownloadFile(
                 "https://speed.hetzner.de/100MB.bin"
             // If you need, you can add a dictionary of headers you need.
             //, new Dictionary<string, string> {
@@ -33,21 +32,22 @@ namespace DownloadExample
             );
         }
 
-        public void StartDownloading (bool mobileNetworkAllowed)
+        public void StartDownloading(bool mobileNetworkAllowed)
         {
-            CrossDownloadManager.Current.Start (File, mobileNetworkAllowed);
+            CrossDownloadManager.Current.Start(File, mobileNetworkAllowed);
         }
 
-        public void AbortDownloading ()
+        public void AbortDownloading()
         {
-            CrossDownloadManager.Current.Abort (File);
+            CrossDownloadManager.Current.Abort(File);
         }
 
-        public bool IsDownloading ()
+        public bool IsDownloading()
         {
             if (File == null) return false;
 
-            switch (File.Status) {
+            switch (File.Status)
+            {
                 case DownloadFileStatus.INITIALIZED:
                 case DownloadFileStatus.PAUSED:
                 case DownloadFileStatus.PENDING:
@@ -58,10 +58,10 @@ namespace DownloadExample
                 case DownloadFileStatus.CANCELED:
                 case DownloadFileStatus.FAILED:
                     return false;
+
                 default:
                     throw new ArgumentOutOfRangeException();
             }
         }
-   }
+    }
 }
-

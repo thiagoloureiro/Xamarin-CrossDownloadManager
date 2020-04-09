@@ -1,7 +1,6 @@
-using System;
-
 using Android.App;
 using Android.Runtime;
+using System;
 
 namespace DownloadExample.Droid
 {
@@ -9,9 +8,8 @@ namespace DownloadExample.Droid
     public class MainApplication : Application
     {
         public MainApplication(IntPtr handle, JniHandleOwnership transer)
-          :base(handle, transer)
+          : base(handle, transer)
         {
         }
-
-	}
+    }
 }

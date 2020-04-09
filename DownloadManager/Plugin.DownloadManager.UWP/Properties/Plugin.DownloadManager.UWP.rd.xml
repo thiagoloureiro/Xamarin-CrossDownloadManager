@@ -28,6 +28,5 @@
   <Library Name="Plugin.DownloadManager.UWP">
 
   	<!-- add directives for your library here -->
-
   </Library>
 </Directives>

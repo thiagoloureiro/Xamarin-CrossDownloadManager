@@ -1,5 +1,5 @@
-﻿using Windows.Networking.BackgroundTransfer;
-using Plugin.DownloadManager.Abstractions;
+﻿using Plugin.DownloadManager.Abstractions;
+using Windows.Networking.BackgroundTransfer;
 
 namespace Plugin.DownloadManager
 {

@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Plugin.DownloadManager.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
-using Plugin.DownloadManager.Abstractions;
 
 namespace Plugin.DownloadManager
 {
@@ -22,29 +22,29 @@ namespace Plugin.DownloadManager
 
         public Func<IDownloadFile, string> PathNameForDownloadedFile { get; set; }
 
-        public IDownloadFile CreateDownloadFile (string url)
+        public IDownloadFile CreateDownloadFile(string url)
         {
-            throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
 
-        public IDownloadFile CreateDownloadFile (string url, IDictionary<string, string> headers)
+        public IDownloadFile CreateDownloadFile(string url, IDictionary<string, string> headers)
         {
-            throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
 
-        public void Start (IDownloadFile i, bool mobileNetworkAllowed = true)
+        public void Start(IDownloadFile i, bool mobileNetworkAllowed = true)
         {
-            throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
 
-        public void Abort (IDownloadFile i)
+        public void Abort(IDownloadFile i)
         {
-            throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
 
-        public void AbortAll ()
+        public void AbortAll()
         {
-            throw new NotImplementedException ();
+            throw new NotImplementedException();
         }
     }
 }
