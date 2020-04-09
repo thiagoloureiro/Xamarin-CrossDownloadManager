@@ -24,12 +24,12 @@ namespace DownloadExample
         public void InitializeDownload()
         {
             File = CrossDownloadManager.Current.CreateDownloadFile (
-                "http://ipv4.download.thinkbroadband.com/10MB.zip"
-                // If you need, you can add a dictionary of headers you need.
-                //, new Dictionary<string, string> {
-                //    { "Cookie", "LetMeDownload=1;" },
-                //    { "Authorization", "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" }
-                //}
+                "https://speed.hetzner.de/100MB.bin"
+            // If you need, you can add a dictionary of headers you need.
+            //, new Dictionary<string, string> {
+            //    { "Cookie", "LetMeDownload=1;" },
+            //    { "Authorization", "Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==" }
+            //}
             );
         }
 

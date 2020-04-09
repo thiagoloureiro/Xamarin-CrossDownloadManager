@@ -41,7 +41,7 @@ namespace UWP
         public void Download()
         {
             var folder = Windows.ApplicationModel.Package.Current.InstalledLocation;
-            path = Path.Combine(folder.Path, "data_10mb.test");
+            path = Path.Combine(folder.Path, "data_200mb.test");
 
             // If already downloading, abort it.
             if (foo.IsDownloading())
@@ -56,7 +56,7 @@ namespace UWP
             foo.InitializeDownload();
 
             foo.File.PropertyChanged += (sender, e) => {
-                System.Diagnostics.Debug.WriteLine("[Property changed] " + e.PropertyName + " -> " + sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null).ToString());
+               // System.Diagnostics.Debug.WriteLine("[Property changed] " + e.PropertyName + " -> " + sender.GetType().GetProperty(e.PropertyName).GetValue(sender, null).ToString());
 
                 // Update UI text-fields
                 var downloadFile = ((IDownloadFile)sender);
@@ -66,10 +66,10 @@ namespace UWP
                         Statustext.Text = downloadFile.Status.ToString();
                         break;
                     case nameof(IDownloadFile.TotalBytesExpected):
-                        BytesExpected.Text = downloadFile.TotalBytesExpected.ToString();
+                        BytesExpected.Text = (downloadFile.TotalBytesExpected/1000).ToString();
                         break;
                     case nameof(IDownloadFile.TotalBytesWritten):
-                        BytesReceived.Text = downloadFile.TotalBytesWritten.ToString();
+                        BytesReceived.Text = (downloadFile.TotalBytesWritten/1000).ToString();
                         break;
                 }
 
@@ -88,7 +88,7 @@ namespace UWP
                 }
 
                 // Update UI while donwloading.
-                if (e.PropertyName == "TotalBytesWritten" || e.PropertyName == "TotalBytesExpected")
+                if (e.PropertyName == "TotalKBytesWritten" || e.PropertyName == "TotalKBytesExpected")
                 {
                     var bytesExpected = ((IDownloadFile)sender).TotalBytesExpected;
                     var bytesWritten = ((IDownloadFile)sender).TotalBytesWritten;
@@ -107,6 +107,11 @@ namespace UWP
         private void downloadBtn_Click(object sender, RoutedEventArgs e)
         {
             Download();
+        }
+
+        private void TextBlock_SelectionChanged(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
